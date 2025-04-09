@@ -90,6 +90,35 @@ def enviar_recurso(jugadores, tipo_recurso):
         print("-" * 40)
 
 
-enviar_recurso(jugadores, tipo_recurso=1)  # Oro
-enviar_recurso(jugadores, tipo_recurso=2)  # Plata
-enviar_recurso(jugadores, tipo_recurso=3)  # Bronce
+def repetir_envio_manual(id_recurso=2, cantidad=11):
+    print("\n--- Ejecutando envío manual 11 veces ---")
+    data = {
+        "id_jugador_origen": "9fedb91a0f93706d7f09b44d0e5b94c1",  # Felipe
+        "select_jugador_destino": "bdbcc9b006186e87657912bbb0411a37",  # Pedro
+        "select_recurso": id_recurso ,
+        "txt_cantidad": "1"
+    }
+
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    cookies = {
+        "PHPSESSID": PHPSID,
+    }
+
+    for i in range(cantidad):
+        print(f"Envío {i + 1} de {cantidad}...")
+        response = requests.post(URL, headers=headers,
+                                 cookies=cookies, data=data)
+        if response.status_code == 200:
+            print("✅ Envío exitoso.")
+        else:
+            print("⛔ Error en el envío.")
+        print("-" * 40)
+
+
+enviar_recurso(jugadores, 1)  # Enviar oro
+repetir_envio_manual(2, 11) # Enviar plata
+repetir_envio_manual(3, 5) # Enviar bronce
